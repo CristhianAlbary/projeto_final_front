@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './module/core.module';
+
+@NgModule({
+  declarations: [AppComponent],
+  entryComponents: [],
+  imports: [
+    CoreModule, 
+    AppRoutingModule
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}

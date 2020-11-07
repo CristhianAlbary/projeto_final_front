@@ -1,0 +1,13 @@
+@media screen and (min-width: 992px) {
+  ion-menu {
+    width: 150px !important;
+  }
+}
+
+ion-button {
+  text-transform: none;
+}
+
+ion-menu-button {
+  color: #ffffff;
+}
