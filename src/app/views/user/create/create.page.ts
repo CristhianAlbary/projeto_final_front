@@ -14,13 +14,16 @@ import { Component, OnInit } from '@angular/core';
 export class CreatePage implements OnInit {
 
   public user_form: FormGroup;
+  public alertSystem: AlertSystem;
 
   constructor(
     private menuController: MenuController,
     private formBuilder: FormBuilder,
     private navController: NavController,
     private connectionManager: ConnectionManagerService,
-  ) { }
+  ) {
+    this.alertSystem = new AlertSystem();
+  }
 
   ngOnInit() {
     this.menuController.enable(false);
@@ -52,8 +55,12 @@ export class CreatePage implements OnInit {
       this.connectionManager.apiRequestPost(user, Constants.API_ROUTE.USER.CREATE).then(response => {
         if(response && response['state'] == 200) {
           console.log(response);
+          this.alertSystem.alertMessage('Ok!!', Constants.MESSAGES.REGISTER.SUCCESS);
+          this.navController.back();
+        } else if(response['internal_error']) {
+          this.alertSystem.alertMessage('Ops!', 'Uma conta com esse login já existe.');
         } else {
-          new AlertSystem().alertErrorMessage(response['errors'], Constants.OBJECT_KEYS.USER);
+          this.alertSystem.alertErrorMessage(response['errors'], Constants.OBJECT_KEYS.USER);
         }
       });
     } else {

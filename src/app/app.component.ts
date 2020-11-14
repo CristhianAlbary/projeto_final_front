@@ -17,6 +17,16 @@ export class AppComponent implements OnInit {
       url: 'home',
       icon: 'home'
     },
+    {
+      title: 'Suporte por chat',
+      url: 'chat',
+      icon: 'chatbubbles'
+    },
+    {
+      title: 'Novo chamado',
+      url: 'task/create',
+      icon: 'document'
+    }
   ];
 
   constructor(

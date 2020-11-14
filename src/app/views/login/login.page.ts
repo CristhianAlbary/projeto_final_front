@@ -1,4 +1,3 @@
-import { WebsocketGuardService } from './../../services/guards/websocket/websocket-guard.service';
 import { Session } from 'src/app/models/utils/session/session';
 import { AlertSystem } from './../../models/utils/alert/alert-system';
 import { ConnectionManagerService } from './../../services/http/connectionManager/connection-manager.service';
@@ -26,7 +25,6 @@ export class LoginPage implements OnInit {
     private navController: NavController,
     private connectionManagerService: ConnectionManagerService,
     private ws: WebsocketConnectionService,
-    private authGuard: AuthGuardService
   ) {
     this.alertSystem = new AlertSystem();
   }
@@ -35,7 +33,7 @@ export class LoginPage implements OnInit {
     Session.destroySession();
     this.menuController.enable(false);
     this.initializeForm();
-    if(this.ws.checkConnectionState()) {
+    if (this.ws.checkConnectionState()) {
       this.ws.wsCloseConnection();
     }
     this.ws.openWsConnection();
@@ -54,10 +52,14 @@ export class LoginPage implements OnInit {
 
   submitLoginForm(value) {
     this.connectionManagerService.apiRequestPost(value, Constants.API_ROUTE.LOGIN).then(response => {
-      Session.setSessionItem('user', response['data']);
-      if(AuthGuardService.checkAuthState()) {
-        this.menuController.enable(true);
-        this.navController.navigateRoot('home');
+      if (response && response['data']) {
+        Session.setSessionItem('user', response['data']);
+        if (AuthGuardService.checkAuthState()) {
+          this.menuController.enable(true);
+          this.navController.navigateRoot('home');
+        }
+      } else {
+        this.alertSystem.alertErrorMessage(response['errors'], Constants.OBJECT_KEYS.LOGIN);
       }
     });
   }

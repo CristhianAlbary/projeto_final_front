@@ -23,6 +23,22 @@ const routes: Routes = [
     path: 'user/create',
     loadChildren: () => import('./views/user/create/create.module').then( m => m.CreatePageModule)
   },
+  {
+    path: 'chat',
+    loadChildren: () => import('./views/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'task/create',
+    loadChildren: () => import('./views/task/create/create.module').then( m => m.CreatePageModule)
+  },
+  {
+    path: 'task/update',
+    loadChildren: () => import('./views/task/update/update.module').then( m => m.UpdatePageModule)
+  },
+  {
+    path: 'task/list',
+    loadChildren: () => import('./views/task/list/list.module').then( m => m.ListPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,23 @@
+<ion-grid>
+  <ion-row class="online-users">
+    <ion-col size="4">
+      <ion-item>
+        <ion-text>Cristhian</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" class="chat">
+      <div class="message-area">
+        <ion-item lines="none">
+          <ion-text slot="{{message_status == 'me' ? 'start' : 'end'}}">
+            Olá!
+            <br>
+            <ion-label>15:20</ion-label>
+          </ion-text>
+        </ion-item>
+      </div>
+      <div class="btn-send">
+        <ion-button>Enviar</ion-button>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>

@@ -14,14 +14,20 @@ export class Constants {
         }
     }
 
-    public static ERROR_KEY = {
-        LOGIN: 'login'
-    }
-
     public static CLASS_NAME = {
         ProductWebSocket: 'ProductNotify',
         ClientWebSocket: 'ClientList',
         UserConnWebSocket: 'WebSocketUserConn'
+    }
+
+    public static ERROR_KEY = {
+        LOGIN: ['login']
+    }
+
+    public static MESSAGES = {
+        REGISTER: {
+            SUCCESS: 'Cadastro realizado!'
+        }
     }
 
     public static OBJECT_KEYS = {
@@ -32,6 +38,9 @@ export class Constants {
             'status',
             'tiop'
         ],
+        LOGIN: [
+            'login'
+        ]
     }
 
 }

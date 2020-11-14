@@ -19,7 +19,7 @@ export class AlertSystem {
                             resolve(false);
                         }
                     }, {
-                        text: 'Importar',
+                        text: 'Ok',
                         cssClass: 'success',
                         handler: () => {
                             resolve(true);
@@ -35,10 +35,12 @@ export class AlertSystem {
     public async alertErrorMessage(err, keys) {
         var errorMessage = '';
         keys.forEach(element => {
-            if(err[element]) {
-                err[element].forEach(message => {
-                    errorMessage = "<p>" + errorMessage + message + "</p>";
-                });
+            console.log(err);
+            if (err[element]) {
+                console.log(err);
+                if(err[element]) {
+                    errorMessage = "<p>" + errorMessage + err[element] + "</p>";
+                }
             }
         });
         const alert = await this.alertController.create({
