@@ -25,8 +25,7 @@ export class WebsocketConnectionService {
   }
 
   public openWsConnection() {
-    WebsocketConnectionService.ws = new WebSocket('ws://192.168.0.13:8010');
-    // WebsocketConnectionService.ws = new WebSocket('ws://172.16.208.210:8010');
+    WebsocketConnectionService.ws = new WebSocket('ws://localhost:8000');
     this.wsListenEvent();
   }
 
