@@ -13,7 +13,7 @@ import { Session } from 'src/app/models/utils/session/session';
 export class HomePage implements OnInit {
 
   constructor(
-    private websocketGuardService: WebsocketGuardService
+    
   ) { }
 
   ngOnInit() {

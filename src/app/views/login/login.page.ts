@@ -1,3 +1,5 @@
+import { GenericWs } from 'src/app/models/entity/generics/websocket/generic-ws';
+import { WebsocketGuardService } from './../../services/guards/websocket/websocket-guard.service';
 import { Session } from 'src/app/models/utils/session/session';
 import { AlertSystem } from './../../models/utils/alert/alert-system';
 import { ConnectionManagerService } from './../../services/http/connectionManager/connection-manager.service';
@@ -30,13 +32,10 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    Session.destroySession();
     this.menuController.enable(false);
+    Session.destroySession();
+    GenericWs.onlineUsers.next(1);
     this.initializeForm();
-    if (this.ws.checkConnectionState()) {
-      this.ws.wsCloseConnection();
-    }
-    this.ws.openWsConnection();
   }
 
   initializeForm() {
@@ -56,6 +55,7 @@ export class LoginPage implements OnInit {
         Session.setSessionItem('user', response['data']);
         if (AuthGuardService.checkAuthState()) {
           this.menuController.enable(true);
+          new WebsocketGuardService(this.connectionManagerService).reconnect();
           this.navController.navigateRoot('home');
         }
       } else {

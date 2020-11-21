@@ -11,3 +11,7 @@ ion-button {
 ion-menu-button {
   color: #ffffff;
 }
+
+.link {
+  cursor: pointer;
+}

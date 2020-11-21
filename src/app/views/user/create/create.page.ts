@@ -54,7 +54,6 @@ export class CreatePage implements OnInit {
       }
       this.connectionManager.apiRequestPost(user, Constants.API_ROUTE.USER.CREATE).then(response => {
         if(response && response['state'] == 200) {
-          console.log(response);
           this.alertSystem.alertMessage('Ok!!', Constants.MESSAGES.REGISTER.SUCCESS);
           this.navController.back();
         } else if(response['internal_error']) {

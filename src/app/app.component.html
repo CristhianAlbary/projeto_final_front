@@ -3,11 +3,11 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header><ion-text color="light">Projeto Padrão</ion-text></ion-list-header>
-          <ion-note>login + home-page</ion-note>
+          <ion-list-header><ion-text color="light">Sistemas Distribuidos</ion-text></ion-list-header>
+          <ion-note>Projeto Final</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false">
+            <ion-item id="{{p.id}}" (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false">
               <ion-icon color="light" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-text color="light">{{ p.title }}</ion-text>
             </ion-item>

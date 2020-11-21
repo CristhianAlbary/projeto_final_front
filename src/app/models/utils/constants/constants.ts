@@ -7,7 +7,8 @@ export class Constants {
     }
 
     public static API_ROUTE = {
-        SERVER: 'http://localhost:8000/api/',
+        SERVER: 'http://192.168.0.13:8000/api/',
+        // SERVER: 'http://172.16.208.210:8000/api/',
         LOGIN: 'auth/login',
         USER: {
             CREATE: 'user/store'

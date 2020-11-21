@@ -1,8 +1,12 @@
+import { GenericWs } from './models/entity/generics/websocket/generic-ws';
+import { WebsocketGuardService } from './services/guards/websocket/websocket-guard.service';
 import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Keyboard } from './models/utils/keyboard/keyboard';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,27 +16,16 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
-    {
-      title: 'Home',
-      url: 'home',
-      icon: 'home'
-    },
-    {
-      title: 'Suporte por chat',
-      url: 'chat',
-      icon: 'chatbubbles'
-    },
-    {
-      title: 'Novo chamado',
-      url: 'task/create',
-      icon: 'document'
-    }
+    { title: 'Home', url: 'home', icon: 'home', 'id': 'home' },
+    { title: 'Suporte por chat', url: 'chat', icon: 'chatbubbles', 'id': 'suporte' },
+    { title: 'Novo chamado', url: 'task/create', icon: 'document', 'id': 'task-create'}
   ];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private webSocketGuardService: WebsocketGuardService
   ) {
     this.initializeApp();
   }
@@ -44,5 +37,17 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.startApp();
+  }
+
+  public startApp() {
+    this.webSocketGuardService.connectionUserSubscribe();
+    Keyboard.keyboardListen(this.webSocketGuardService);
+  }
+
+  public ionViewWillLeave() {
+    GenericWs.webSocketUserConn = new BehaviorSubject(0);
+  }
+
 }

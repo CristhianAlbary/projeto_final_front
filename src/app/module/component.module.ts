@@ -3,6 +3,7 @@ import { HeaderComponent } from './../components/header/header.component';
 import { NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FooterComponent } from '../components/footer/footer.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { FooterComponent } from '../components/footer/footer.component';
     WindowComponent
   ],
   imports: [
-    IonicModule
+    IonicModule,
+    CommonModule
   ],
   exports: [
     HeaderComponent,

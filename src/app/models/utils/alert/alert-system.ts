@@ -35,9 +35,7 @@ export class AlertSystem {
     public async alertErrorMessage(err, keys) {
         var errorMessage = '';
         keys.forEach(element => {
-            console.log(err);
             if (err[element]) {
-                console.log(err);
                 if(err[element]) {
                     errorMessage = "<p>" + errorMessage + err[element] + "</p>";
                 }

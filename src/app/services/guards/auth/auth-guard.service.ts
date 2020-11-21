@@ -1,6 +1,4 @@
-import { WebsocketConnectionService } from 'src/app/services/websocket/websocket-connection.service';
 import { Session } from 'src/app/models/utils/session/session';
-import { GenericWs } from 'src/app/models/entity/generics/websocket/generic-ws';
 import { Injectable } from '@angular/core';
 import { CanActivate, CanLoad, Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlSegment, UrlTree, Route } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -20,6 +18,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
 
   public canLoad(route: Route, segments: UrlSegment[]): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     if(AuthGuardService.checkAuthState()) {
+      this.menuAccessValidate();
       return true;
     }
     this.router.navigateByUrl('login');
@@ -31,4 +30,11 @@ export class AuthGuardService implements CanActivate, CanLoad {
     }
     return true;
   }
+
+  public menuAccessValidate() {
+    if(Session.getSessionItem('user') && Session.getSessionItem('user').tipo == 'USU') {
+      document.getElementById('task-create').remove();
+    }
+  }
+
 }

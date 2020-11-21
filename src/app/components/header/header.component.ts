@@ -1,3 +1,6 @@
+import { Session } from 'src/app/models/utils/session/session';
+import { AlertSystem } from './../../models/utils/alert/alert-system';
+import { WebsocketConnectionService } from 'src/app/services/websocket/websocket-connection.service';
 import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,13 +12,19 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private navController: NavController
+    private navController: NavController,
+    private ws: WebsocketConnectionService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   exit() {
-    this.navController.navigateRoot('login');
+    Session.destroySession();
+    try {
+      this.ws.wsCloseConnection();
+    } catch (error) {
+      this.navController.navigateRoot('login');
+    }
   }
 
 }

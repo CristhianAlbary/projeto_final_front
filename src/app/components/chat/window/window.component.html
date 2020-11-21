@@ -1,23 +1,32 @@
 <ion-grid>
   <ion-row class="online-users">
-    <ion-col size="4">
-      <ion-item>
-        <ion-text>Cristhian</ion-text>
+    <ion-col size="4" class="users overflow-auto">
+      <ion-item color="dark">
+        <ion-text slot="start">Suportes online</ion-text>
+      </ion-item>
+      <ion-item *ngFor="let user of users" class="link" color="{{user.selected ? 'primary' : 'light'}}" (click)="setSelected(user)">
+        <ion-text>{{user.nome}}</ion-text>
+        <ion-text slot="end" color="success" class="online-status">•</ion-text>
       </ion-item>
     </ion-col>
     <ion-col size="8" class="chat">
-      <div class="message-area">
-        <ion-item lines="none">
-          <ion-text slot="{{message_status == 'me' ? 'start' : 'end'}}">
-            Olá!
+      <div class="message-area overflow-auto" id="message-area">
+        <ion-item lines="none" *ngFor="let item of messages; let i = index">
+          <ion-text slot="{{item.status == 'send' ? 'end' : 'start'}}" id="{{'msg-' + i.toString()}}">
+            {{item.message}}
             <br>
-            <ion-label>15:20</ion-label>
+            <ion-label>{{item.date | date:'HH:mm'}}</ion-label>
           </ion-text>
         </ion-item>
       </div>
-      <div class="btn-send">
-        <ion-button>Enviar</ion-button>
-      </div>
+      <section class="row send-message">
+        <div class="message-input">
+          <ion-input placeholder="mensagem:" id="message"></ion-input>
+        </div>
+        <div class="message-btn">
+          <ion-button color="primary" (click)="sendMessage()">Enviar</ion-button>
+        </div>
+      </section>
     </ion-col>
   </ion-row>
 </ion-grid>

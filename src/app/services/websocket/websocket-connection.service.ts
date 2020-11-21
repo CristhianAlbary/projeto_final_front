@@ -17,7 +17,7 @@ export class WebsocketConnectionService {
   }
 
   public checkConnectionState() {
-    if(WebsocketConnectionService.ws && WebsocketConnectionService.ws.readState === 1) {
+    if (WebsocketConnectionService.ws && WebsocketConnectionService.ws.readState === 1) {
       return true;
     } else {
       return false;
@@ -25,29 +25,31 @@ export class WebsocketConnectionService {
   }
 
   public openWsConnection() {
-    WebsocketConnectionService.ws = new WebSocket('ws://localhost:8010');
+    WebsocketConnectionService.ws = new WebSocket('ws://192.168.0.13:8010');
+    // WebsocketConnectionService.ws = new WebSocket('ws://172.16.208.210:8010');
     this.wsListenEvent();
   }
 
   public wsListenEvent() {
     WebsocketConnectionService.ws.onmessage = (event) => {
       this.wsResponse = JSON.parse(event.data);
-      let wsExecute = this.genericWs.listenValuesRealTime(this.wsResponse)[this.wsResponse.element];
-      wsExecute();
+      if (this.wsResponse && this.wsResponse.element) {
+        let wsExecute = this.genericWs.listenValuesRealTime(this.wsResponse)[this.wsResponse.element];
+        wsExecute();
+      }
     }
 
     WebsocketConnectionService.ws.onerror = (err) => {
-      console.log(err);
+      
     }
 
     WebsocketConnectionService.ws.onclose = () => {
-      console.log('Conexão Fechada');
       location.href = '/login';
     }
   }
 
   public wsSendMessage(data) {
-    if(this.checkConnectionState) {
+    if (this.checkConnectionState) {
       WebsocketConnectionService.ws.send(JSON.stringify(data));
     }
   }
