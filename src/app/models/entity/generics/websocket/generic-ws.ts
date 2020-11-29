@@ -5,6 +5,7 @@ export class GenericWs {
 
     public static webSocketUserConn: BehaviorSubject<any> = new BehaviorSubject(0);
     public static onlineUsers: BehaviorSubject<any> = new BehaviorSubject(0);
+    public static chatMessage: BehaviorSubject<any> = new BehaviorSubject(0);
 
     constructor(
         private connectionManager: ConnectionManagerService
@@ -16,7 +17,8 @@ export class GenericWs {
                 GenericWs.webSocketUserConn.next(data);
             },
             ChatMessages: () => {
-
+                console.log(data);
+                GenericWs.chatMessage.next(data);
             }
         }
     }
@@ -33,10 +35,10 @@ export class GenericWs {
             ChatMessages: {
                 'name': 'ChatMessage',
                 'class': 'App\\Services\\ChatMessageService',
-                'method': 'sendMessage',
+                'method': 'saveMessage',
                 'element': 'ChatMessages',
                 'params': params
-            }
+            },
         }
     }
 

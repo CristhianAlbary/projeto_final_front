@@ -1,3 +1,5 @@
+import { ConnectionManagerService } from './../../../services/http/connectionManager/connection-manager.service';
+import { Message } from './../../../models/entity/generics/messages/message';
 import { GenericWs } from 'src/app/models/entity/generics/websocket/generic-ws';
 import { Component, OnInit } from '@angular/core';
 import { Session } from 'src/app/models/utils/session/session';
@@ -9,40 +11,42 @@ import { Session } from 'src/app/models/utils/session/session';
 })
 export class WindowComponent implements OnInit {
 
-  public messages= [];
-  public users;
+  public messages = [];
+  public user;
+  public users = [];
   public user_selected;
+  public user_status;
 
-  constructor() {}
+  constructor(
+    private ConnectionManagerService: ConnectionManagerService
+  ) { }
 
   ngOnInit() {
     this.getUsers();
+    this.setUserType();
     setTimeout(() => {
       this.scrollControll();
     }, 100);
   }
 
   public getUsers() {
+    this.user = Session.getSessionItem('user');
     GenericWs.onlineUsers.subscribe({
       next: (trigger) => {
-        if(trigger == 1) {
-          if(Session.getSessionItem('users')){
-            this.users = Session.getSessionItem('users');
-            if(this.users && this.users.length == 1) {
-              this.users[0]['selected'] = true;
-            } else {
-              this.users.forEach((element, index) => {
-                if(index == 0) {
-                  element['selected'] = true;
-                } else {
-                  element['selected'] = false;
-                }
-              });
-            }
-          }
+        if (trigger == 1) {
+          this.users = [];
+          this.users = Session.getSessionItem('users');
         }
       }
     });
+  }
+
+  public setUserType() {
+    if(Session.getSessionItem('user').tipo == 'SUP') {
+      this.user_status = 'USU';
+    } else {
+      this.user_status = 'SUP';
+    }
   }
 
   public scrollControll() {
@@ -50,10 +54,13 @@ export class WindowComponent implements OnInit {
     objDiv.scrollTop = objDiv.scrollHeight;
   }
 
-  public sendMessage() {
-    let input = <HTMLInputElement> document.getElementById('message');
-    this.messages.push({'message': input.value, 'status': 'send', 'date': new Date()});
-    this.clear(input);
+  public sendMessage(from, to) {
+    if (this.user_selected) {
+      let inputMessage = <HTMLInputElement>document.getElementById('message');
+      this.messages.push({ 'message': inputMessage.value, 'status': 'send', 'date': new Date() });
+      new Message({'from': from, 'to': to, 'message': inputMessage.value}).sendMessage(this.ConnectionManagerService);
+      this.clear(inputMessage);
+    }
   }
 
   public setSelected(user) {
@@ -61,6 +68,7 @@ export class WindowComponent implements OnInit {
       user.id == element.id ? element.selected = true : element.selected = false;
     });
     this.user_selected = user;
+    Message.getMessagesByUser(this.user_selected);
   }
 
   public clear(input: HTMLInputElement) {

@@ -4,10 +4,13 @@
       <ion-item color="dark">
         <ion-text slot="start">Suportes online</ion-text>
       </ion-item>
-      <ion-item *ngFor="let user of users" class="link" color="{{user.selected ? 'primary' : 'light'}}" (click)="setSelected(user)">
-        <ion-text>{{user.nome}}</ion-text>
-        <ion-text slot="end" color="success" class="online-status">•</ion-text>
-      </ion-item>
+      <section *ngFor="let element of users">
+        <ion-item class="link" color="{{element.selected ? 'primary' : 'light'}}" (click)="setSelected(element)" *ngIf="element.nome != user.nome && element.tipo == user_status">
+          <ion-text>{{element.nome}}</ion-text>
+          <ion-text slot="end" color="success" class="online-status">•</ion-text>
+        </ion-item>
+      </section>
+     
     </ion-col>
     <ion-col size="8" class="chat">
       <div class="message-area overflow-auto" id="message-area">
@@ -24,7 +27,7 @@
           <ion-input placeholder="mensagem:" id="message"></ion-input>
         </div>
         <div class="message-btn">
-          <ion-button color="primary" (click)="sendMessage()">Enviar</ion-button>
+          <ion-button color="primary" (click)="sendMessage(user, user_selected)">Enviar</ion-button>
         </div>
       </section>
     </ion-col>

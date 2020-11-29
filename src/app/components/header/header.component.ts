@@ -1,3 +1,5 @@
+import { WindowComponent } from './../chat/window/window.component';
+import { GenericWs } from './../../models/entity/generics/websocket/generic-ws';
 import { Session } from 'src/app/models/utils/session/session';
 import { AlertSystem } from './../../models/utils/alert/alert-system';
 import { WebsocketConnectionService } from 'src/app/services/websocket/websocket-connection.service';
@@ -22,8 +24,11 @@ export class HeaderComponent implements OnInit {
     Session.destroySession();
     try {
       this.ws.wsCloseConnection();
-    } catch (error) {
+    } catch (exit) {
       this.navController.navigateRoot('login');
+      setTimeout(() => {
+        GenericWs.onlineUsers.next(1);
+      }, 200);
     }
   }
 

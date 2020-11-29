@@ -23,13 +23,6 @@ export class Keyboard {
 
     public static keyboardFunctions() {
         return {
-            Enter() {
-                if(document.getElementById('error-message')) {
-                    Keyboard.alertController.dismiss();
-                } else {
-                    document.getElementById("submit-btn").click();
-                }
-            },
             F5() {
                 Keyboard.f5.next(true);
             }
