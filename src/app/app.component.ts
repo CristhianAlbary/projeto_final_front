@@ -18,7 +18,8 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: 'home', icon: 'home', 'id': 'home' },
     { title: 'Suporte por chat', url: 'chat', icon: 'chatbubbles', 'id': 'suporte' },
-    { title: 'Novo chamado', url: 'task/create', icon: 'document', 'id': 'task-create'}
+    { title: 'Chamados', url: 'task/list', icon: 'document', 'id': 'task-list'},
+    { title: 'Meus chamados', url: 'mytask/list', icon: 'documents', 'id': 'my-tasks'}
   ];
 
   constructor(

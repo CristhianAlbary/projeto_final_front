@@ -14,7 +14,7 @@
     </ion-col>
     <ion-col size="8" class="chat">
       <div class="message-area overflow-auto" id="message-area">
-        <ion-item lines="none" *ngFor="let item of messages; let i = index">
+        <ion-item lines="none" *ngFor="let item of conversation; let i = index">
           <ion-text slot="{{item.status == 'send' ? 'end' : 'start'}}" id="{{'msg-' + i.toString()}}">
             {{item.message}}
             <br>

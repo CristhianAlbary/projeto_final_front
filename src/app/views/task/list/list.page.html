@@ -1,9 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>list</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header></app-header>
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="title">
+          <ion-text>Lista de chamados</ion-text>
+        </div>
+        <section *ngIf="tasks && tasks.length >= 1">
+          <ion-item *ngFor="let task of tasks" (click)="update(task)" class="{{task.status == 'A' ? 'task-open' : 'task-close'}}">
+            <ion-text color="dark"><b>Tarefa:</b> {{task.nome}}</ion-text>
+            <ion-text slot="end"><b>Ultima Alteração:</b> {{task.updated_at | date: 'dd/mm/yyyy HH:mm'}}</ion-text>
+          </ion-item>
+        </section>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+<app-footer></app-footer>

@@ -21,23 +21,38 @@ const routes: Routes = [
   },
   {
     path: 'user/create',
-    loadChildren: () => import('./views/user/create/create.module').then( m => m.CreatePageModule)
+    loadChildren: () => import('./views/user/create/create.module').then( m => m.CreatePageModule),
+    canLoad: [AuthGuardService]
   },
   {
     path: 'chat',
-    loadChildren: () => import('./views/chat/chat.module').then( m => m.ChatPageModule)
+    loadChildren: () => import('./views/chat/chat.module').then( m => m.ChatPageModule),
+    canLoad: [AuthGuardService]
   },
   {
     path: 'task/create',
-    loadChildren: () => import('./views/task/create/create.module').then( m => m.CreatePageModule)
+    loadChildren: () => import('./views/task/create/create.module').then( m => m.CreatePageModule),
+    canLoad: [AuthGuardService]
   },
   {
     path: 'task/update',
-    loadChildren: () => import('./views/task/update/update.module').then( m => m.UpdatePageModule)
+    loadChildren: () => import('./views/task/update/update.module').then( m => m.UpdatePageModule),
+    canLoad: [AuthGuardService]
   },
   {
     path: 'task/list',
-    loadChildren: () => import('./views/task/list/list.module').then( m => m.ListPageModule)
+    loadChildren: () => import('./views/task/list/list.module').then( m => m.ListPageModule),
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: 'mytask/list',
+    loadChildren: () => import('./views/my-task/list/list.module').then( m => m.ListPageModule),
+    canLoad: [AuthGuardService]
+  },
+  {
+    path: 'mytask/show',
+    loadChildren: () => import('./views/my-task/show/show.module').then( m => m.ShowPageModule),
+    canLoad: [AuthGuardService]
   },
 ];
 

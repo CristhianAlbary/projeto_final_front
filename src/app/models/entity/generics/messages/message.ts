@@ -1,5 +1,5 @@
+import { Constants } from './../../../utils/constants/constants';
 import { ConnectionManagerService } from './../../../../services/http/connectionManager/connection-manager.service';
-import { WebsocketGuardService } from './../../../../services/guards/websocket/websocket-guard.service';
 import { GenericWs } from '../websocket/generic-ws';
 import { WebsocketConnectionService } from 'src/app/services/websocket/websocket-connection.service';
 export class Message {
@@ -13,11 +13,14 @@ export class Message {
     public sendMessage(connectionManager: ConnectionManagerService) {
         let serverClass = new GenericWs(connectionManager).serverClass(this.messageObject);
         new WebsocketConnectionService(connectionManager).wsSendMessage(serverClass['ChatMessages']);
-        
     }
 
-    public static getMessagesByUser(user) {
-        // http GET
+    public getConversation(connectionManager: ConnectionManagerService, idOrigin, idDest) {
+        return connectionManager.apiRequestGet(Constants.API_ROUTE.MESSAGES.CONVERSATION + idOrigin + '/' + idDest).then(response => {
+            if(response && response['data']) {
+                return response['data'];
+            }
+        });
     }
 
 }

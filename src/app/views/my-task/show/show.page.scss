@@ -1,0 +1,22 @@
+.header {
+    width: 100%;
+    padding: 0 40px;
+    margin-top: 50px;
+    text-align: right;
+    font-size: calc(1em + 2vw);
+    ion-icon {
+        cursor: pointer;
+    }
+}
+
+ion-col {
+    margin: auto;
+    ion-list {
+        ion-list-header {
+            width: 100%;
+            h1 {
+                margin: auto;
+            }
+        }
+    }
+}

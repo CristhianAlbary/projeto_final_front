@@ -1,0 +1,30 @@
+.title {
+    width: 100%;
+    margin-bottom: 40px;
+    font-size: calc(1em + 1.5vw);
+    text-align: center;
+}
+
+section {
+    border: 1px solid #dedede;
+    border-radius: 5px;
+}
+
+ion-item {
+    cursor: pointer;
+    padding: 0 20px;
+}
+
+.task-open:hover {
+    color: #0081bd;
+    ion-text {
+        color: #0081bd;
+    }
+}
+
+.task-close {
+    color: #bd0000;
+    ion-text {
+        color: #bd0000;
+    }
+}

@@ -13,6 +13,11 @@
                 <input class="text-center" formControlName="nome" type="text" class="form-control" placeholder="Nome">
               </div>
               <div class="form-group">
+                <ion-select class="select-form" formControlName="user" ok-text="Confirmar" cancel-text="Cancelar" *ngIf="users && users.length >= 1" placeholder="Cliente">
+                  <ion-select-option *ngFor="let user of users" value="{{user.id}}">{{user.login}}</ion-select-option>
+                </ion-select>
+              </div>
+              <div class="form-group">
                 <ion-textarea formControlName="descricao" class="form-control" placeholder="Enter more information here..."></ion-textarea>
               </div>
               <div class="form-group">

@@ -7,10 +7,21 @@ export class Constants {
     }
 
     public static API_ROUTE = {
-        SERVER: 'http://localhost:8000/api/',
+        SERVER: 'http://localhost:8030/api/',
         LOGIN: 'auth/login',
         USER: {
-            CREATE: 'user/store'
+            CREATE: 'user/store',
+            FIND_ALL: 'user/find/all',
+        },
+        MESSAGES: {
+            CONVERSATION: 'messages/conversation/'
+        },
+        TASK: {
+            STORE: "task/store",
+            UPDATE: "task/update",
+            FIND_ALL: "task/find/all",
+            FIND_BY_USER: "task/find/by/user/",
+            REPORT: "report/get/pdf/",
         }
     }
 

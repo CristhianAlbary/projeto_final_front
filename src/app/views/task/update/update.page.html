@@ -1,9 +1,47 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>update</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header></app-header>
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="10">
+        <ion-card>
+          <ion-card-header>
+            Novo Chamado
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="task_form" (ngSubmit)="submitLoginForm(task_form.value)">
+              <div class="form-group">
+                <input class="text-center" formControlName="nome" type="text" class="form-control" placeholder="Nome">
+              </div>
+              <div class="form-group">
+                <ion-select class="select-form" formControlName="status" ok-text="Confirmar" cancel-text="Cancelar" placeholder="Status">
+                  <ion-select-option value="A">Aberto</ion-select-option>
+                  <ion-select-option value="F">Fechado</ion-select-option>
+                </ion-select>
+              </div>
+              <div class="form-group">
+                <ion-select class="select-form" formControlName="user" ok-text="Confirmar" cancel-text="Cancelar" *ngIf="users && users.length >= 1" placeholder="Cliente">
+                  <ion-select-option *ngFor="let user of users" value="{{user.id}}">{{user.login}}</ion-select-option>
+                </ion-select>
+              </div>
+              <div class="form-group">
+                <ion-textarea formControlName="descricao" class="form-control" placeholder="Enter more information here..."></ion-textarea>
+              </div>
+              <div class="form-group">
+                <input class="text-center" formControlName="data" type="date" class="form-control" placeholder="Data">
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <ion-button color="success" type="submit" class="submit-btn" expand="full">Cadastrar</ion-button>
+                </div>
+                <div class="col-6">
+                  <ion-button color="primary" class="submit-btn" expand="full" (click)="back()">Voltar</ion-button>
+                </div>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+<app-footer></app-footer>

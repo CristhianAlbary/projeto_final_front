@@ -16,14 +16,25 @@ export class WindowComponent implements OnInit {
   public users = [];
   public user_selected;
   public user_status;
+  public conversation = [];
 
   constructor(
-    private ConnectionManagerService: ConnectionManagerService
+    private connectionManager: ConnectionManagerService
   ) { }
 
   ngOnInit() {
     this.getUsers();
     this.setUserType();
+    if (!GenericWs.chatMessage.value) {
+      GenericWs.chatMessage.subscribe({
+        next: (response) => {
+          if (response && response.content) {
+            this.conversation.push({ 'status': 'received', 'message': response.content.message, 'date': new Date() });
+            this.scrollControll();
+          }
+        }
+      });
+    }
     setTimeout(() => {
       this.scrollControll();
     }, 100);
@@ -42,7 +53,7 @@ export class WindowComponent implements OnInit {
   }
 
   public setUserType() {
-    if(Session.getSessionItem('user').tipo == 'SUP') {
+    if (Session.getSessionItem('user').tipo == 'SUP') {
       this.user_status = 'USU';
     } else {
       this.user_status = 'SUP';
@@ -52,13 +63,19 @@ export class WindowComponent implements OnInit {
   public scrollControll() {
     var objDiv = document.getElementById("message-area");
     objDiv.scrollTop = objDiv.scrollHeight;
+    if (this.conversation.length >= 1) {
+      setTimeout(() => {
+        document.getElementById('msg-' + (this.conversation.length - 1).toString()).scrollIntoView();
+      }, 150);
+    }
   }
 
   public sendMessage(from, to) {
     if (this.user_selected) {
       let inputMessage = <HTMLInputElement>document.getElementById('message');
       this.messages.push({ 'message': inputMessage.value, 'status': 'send', 'date': new Date() });
-      new Message({'from': from, 'to': to, 'message': inputMessage.value}).sendMessage(this.ConnectionManagerService);
+      this.startConversation(inputMessage.value);
+      new Message({ 'from': from, 'to': to, 'message': inputMessage.value }).sendMessage(this.connectionManager);
       this.clear(inputMessage);
     }
   }
@@ -68,15 +85,28 @@ export class WindowComponent implements OnInit {
       user.id == element.id ? element.selected = true : element.selected = false;
     });
     this.user_selected = user;
-    Message.getMessagesByUser(this.user_selected);
+    new Message(null).getConversation(this.connectionManager, Session.getSessionItem('user').id, this.user_selected.id).then(response => {
+      if(response && response.length >= 1) {
+        response.forEach(element => {
+          if(element.usu_origem == Session.getSessionItem('user').id) {
+            this.conversation.push({ 'status': 'send', 'message': element.mensagem, 'date': element.created_at });
+          } else {
+            this.conversation.push({ 'status': 'receive', 'message': element.mensagem, 'date': element.created_at });
+          }
+        });
+        this.scrollControll();
+      } 
+    });
+  }
+
+  public startConversation(message) {
+    this.conversation.push({ 'status': 'send', 'message': message, 'date': new Date() });
   }
 
   public clear(input: HTMLInputElement) {
     input.value = null;
     input.focus();
-    setTimeout(() => {
-      document.getElementById('msg-' + (this.messages.length - 1).toString()).scrollIntoView();
-    }, 150);
+    this.scrollControll();
   }
 
 }
